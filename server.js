@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 mongoose.set('strictQuery', true); // To avoid deprecation warning
 
 const mongoUrl =
-  process.env.MONGO_URL || 'mongodb://localhost:27017/project-mongo';
+  process.env.MONGO_URL || 'mongodb://localhost:27017/project-happy';
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
