@@ -71,16 +71,31 @@ app.post('/thoughts', async (req, res) => {
 });
 
 // Get a specific thought and update the hearts
-app.post('/thoughts/:thoughtId/like', async (req, res) => {
-  try {
-    const updatedThought = await Thought.findOneAndUpdate(
-      { _id: req.params.id },
+// app.post('/thoughts/:thoughtId/like', async (req, res) => {
+//   try {
+//     const updatedThought = await Thought.findOneAndUpdate(
+//       { _id: req.params.id },
 
-      { $inc: { hearts: 1 } },
-      { new: true }
-    );
-    res.status(200).json(updatedThought);
-  } catch (err) {
+//       { $inc: { hearts: 1 } },
+//       { new: true }
+//     );
+//     res.status(200).json(updatedThought);
+//   } catch (err) {
+//     res.status(400).json({ message: 'Error', error: err.errors });
+//   }
+// });
+
+app.post('/thoughts/:thoughtId/like', async (req, res) => {
+  const { thoughtId } = req.params;
+  try {
+    const updatedThought = await Thought.findByIdAndUpdate(thoughtId, {
+      $inc: { likes: 1 },
+    });
+    res.status(201).json({
+      success: true,
+      response: `Happy thought: ${updatedThought.message} has been updated`,
+    });
+  } catch (e) {
     res.status(400).json({ message: 'Error', error: err.errors });
   }
 });
